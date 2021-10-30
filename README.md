@@ -1,0 +1,4 @@
+- Todo
+	- add button on screen - Add coin to metamask
+	- use tailwind css-library to make website more natural
+	- add verification api for etherscan (try npm module before trying original)
