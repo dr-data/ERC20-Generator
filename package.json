@@ -8,16 +8,19 @@
     "start": "next start"
   },
   "dependencies": {
+    "ethers": "^5.5.1",
     "next": "^11.0.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "ethers": "^5.5.1"
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "autoprefixer": "^10.4.0",
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.4.0",
-    "hardhat": "^2.6.7"
+    "hardhat": "^2.6.7",
+    "postcss": "^8.3.11",
+    "tailwindcss": "^2.2.19"
   }
 }
