@@ -8,6 +8,7 @@ import { connectToWeb3 } from '../api/web3Provider'
 import { getTokenAddressPrefix } from '../api/utils'
 
 function Home() {
+  const { toggleColorMode } = useColorMode()
 
   const [tokenName, setTokenName] = useState('')
   const [tokenSymbol, setTokenSymbol] = useState('')
@@ -21,8 +22,6 @@ function Home() {
   const [message1, setMessage1] = useState('')
   const [tokenAddress, setTokenAddress] = useState('')
 
-
-  const { toggleColorMode } = useColorMode()
 
 
   const addTokenToMetamsk = async () => {

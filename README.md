@@ -1,3 +1,5 @@
-- Todo
-	- add verification api for etherscan (try npm module before trying original)
-	- Support for ERC20 Tokens with different properties
+I will appreciate if someone wanted to collaborate me for future improvements.
+
+Todo
+- Add verification api for etherscan
+- Support for ERC20 Tokens with different properties
