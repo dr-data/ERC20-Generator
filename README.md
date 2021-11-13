@@ -1,4 +1,5 @@
 - Todo
 	- add button on screen - Add coin to metamask
-	- use tailwind css-library to make website more natural
+	- use chakra-ui for UI design
 	- add verification api for etherscan (try npm module before trying original)
+	- Support for ERC20 Tokens with different properties
