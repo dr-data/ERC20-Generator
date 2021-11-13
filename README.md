@@ -1,4 +1,3 @@
 - Todo
-	- add button on screen - Add coin to metamask
 	- add verification api for etherscan (try npm module before trying original)
 	- Support for ERC20 Tokens with different properties

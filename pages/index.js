@@ -13,12 +13,14 @@ function Home() {
   const [tokenSymbol, setTokenSymbol] = useState('')
   const [totalSupply, setTotalSupply] = useState('')
   const [tokenDecimals, setTokenDecimals] = useState('')
+  const [isFormDisabled, setIsFormDisabled] = useState(false)
 
   const [currChainId, setCurrChainId] = useState('')
   const [buttonText1, setButtonText1] = useState('Mint')
   const [showBtnSpinner, setShowBtnSpinner] = useState(false)
   const [message1, setMessage1] = useState('')
   const [tokenAddress, setTokenAddress] = useState('')
+
 
   const { toggleColorMode } = useColorMode()
 
@@ -57,14 +59,14 @@ function Home() {
     try {
       setButtonText1('Minting')
       setShowBtnSpinner(true)
+      setIsFormDisabled(true)
 
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
-      console.log('signer', signer, provider.getNetwork())
 
       const Token0 = new ethers.ContractFactory(erc20Types.abi, erc20Types.bytecode, signer)
-      const amount1 = ethers.utils.parseUnits('1000', 18)
-      const token0 = await Token0.deploy(tokenName, tokenSymbol, 18, amount1)
+      const amount1 = ethers.utils.parseUnits(totalSupply, tokenDecimals).toString()
+      const token0 = await Token0.deploy(tokenName, tokenSymbol, tokenDecimals, amount1)
       await token0.deployTransaction.wait()
       setTokenAddress(token0.address)
 
@@ -101,21 +103,25 @@ function Home() {
             placeholder='Token Name'
             value={tokenName}
             onChange={e => setTokenName(e.target.value)}
+            isDisabled={isFormDisabled}
           />
           <Input1
             placeholder='Token Symbol'
             value={tokenSymbol}
             onChange={e => setTokenSymbol(e.target.value)}
+            isDisabled={isFormDisabled}
           />
           <Input1
             placeholder='Token Decimals'
             value={tokenDecimals}
             onChange={e => setTokenDecimals(e.target.value)}
+            isDisabled={isFormDisabled}
           />
           <Input1
             placeholder='Total Supply'
             value={totalSupply}
             onChange={e => setTotalSupply(e.target.value)}
+            isDisabled={isFormDisabled}
           />
 
           <Text>{message1}</Text>
@@ -125,6 +131,7 @@ function Home() {
               if (tokenAddress.length > 0) addTokenToMetamsk()
               else handleCreateToken()
             }}
+            isDisabled={isFormDisabled && tokenAddress.length === 0}
           >
             {buttonText1} {'  '} {showBtnSpinner && <Spinner marginLeft='10px' />}
           </Button>
