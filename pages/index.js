@@ -1,11 +1,13 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { ethers } from 'ethers'
-import ERC20_Normal from '../artifacts/contracts/Token0.sol/Token0.json'
-import { Center, Button, Text, Spinner, Flex, Spacer, Switch, useColorMode } from '@chakra-ui/react'
+import {
+  Center, Button, Text, Spinner, Flex, Spacer, Switch,
+  useColorMode, Stack, Checkbox, Box
+} from '@chakra-ui/react'
 import Input1 from '../components/Input1'
 import { connectToWeb3 } from '../api/web3Provider'
-import { getTokenAddressPrefix } from '../api/utils'
+import { getAbiAndBytecode, getTokenAddressPrefix } from '../api/utils'
 
 
 function Home() {
@@ -15,6 +17,8 @@ function Home() {
   const [tokenSymbol, setTokenSymbol] = useState('')
   const [totalSupply, setTotalSupply] = useState('')
   const [tokenDecimals, setTokenDecimals] = useState('')
+  const [isMintable, setIsMintable] = useState(false)
+  const [isBurnable, setIsBurnable] = useState(false)
   const [isFormDisabled, setIsFormDisabled] = useState(false)
 
   const [currChainId, setCurrChainId] = useState('')
@@ -39,6 +43,7 @@ function Home() {
     })
   }
 
+
   const handleCreateToken = async () => {
 
     setMessage1('')
@@ -62,7 +67,8 @@ function Home() {
 
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
-      const Token0 = new ethers.ContractFactory(ERC20_Normal.abi, ERC20_Normal.bytecode, signer)
+      const currentERC20 = getAbiAndBytecode(isMintable, isBurnable)
+      const Token0 = new ethers.ContractFactory(currentERC20.abi, currentERC20.bytecode, signer)
       const amount1 = ethers.utils.parseUnits(totalSupply, tokenDecimals).toString()
       const token0 = await Token0.deploy(tokenName, tokenSymbol, tokenDecimals, amount1)
       const { address, deployTransaction } = token0
@@ -86,29 +92,30 @@ function Home() {
       // })
     } catch (error) {
       console.log(error)
-      setButtonText1('Mint')
+      setButtonText1('Create')
       setShowBtnSpinner(false)
-      setMessage1('Error Occured while Minting Token')
+      setMessage1('Error Occured while Creating Token')
     }
   }
 
   return (
-    <div>
+    <Box minHeight='100vh' position='relative'>
       <Head>
-        <title>Mint ERC20</title>
+        <title>Generate ERC20</title>
+        <meta name="description" content="Create, Generate, Mint ERC20" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Flex padding='15px'>
         <Spacer />
-        <Text fontSize='xl' fontWeight='bold'>ERC20 Minter</Text>
+        <Text fontSize='xl' fontWeight='bold'>ERC20 Token Generator</Text>
         <Spacer />
         <Switch size='lg'
           onChange={toggleColorMode}
         />
       </Flex>
 
-      <Center minHeight='90vh'>
+      <Center marginTop='50px'>
         <Flex maxWidth='350px' flexDir='column'>
 
           <Input1
@@ -129,12 +136,31 @@ function Home() {
             onChange={e => setTokenDecimals(e.target.value)}
             isDisabled={isFormDisabled}
           />
+          <Text opacity='0.5'>Not sure about decimals?, then use 18</Text>
+
           <Input1
-            placeholder='Total Supply'
+            placeholder='Initial Supply'
             value={totalSupply}
             onChange={e => setTotalSupply(e.target.value)}
             isDisabled={isFormDisabled}
           />
+
+          <Stack spacing={10} direction="row" margin='10px 0'>
+            <Checkbox
+              isChecked={isMintable}
+              onChange={e => setIsMintable(e.target.checked)}
+              isDisabled={isFormDisabled}
+            >
+              Mintable
+            </Checkbox>
+            <Checkbox
+              isChecked={isBurnable}
+              onChange={e => setIsBurnable(e.target.checked)}
+              isDisabled={isFormDisabled}
+            >
+              Burnable
+            </Checkbox>
+          </Stack>
 
           <Text>{message1}</Text>
 
@@ -160,7 +186,15 @@ function Home() {
         </Flex>
       </Center>
 
-    </div >
+      <Box position='absolute' bottom='10px' width='100%'>
+        <Text textAlign='center'
+        > Source code: <a
+          href='https://github.com/YoungMahesh/ERC20-Generator'
+          target='_blank'
+        > https://github.com/YoungMahesh/ERC20-Generator </a>
+        </Text>
+      </Box>
+    </Box>
   )
 }
 

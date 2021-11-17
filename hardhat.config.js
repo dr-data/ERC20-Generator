@@ -1,5 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
+require('dotenv').config()
 
 const infuraProjectId = process.env.INFURA_PROJECT_ID
 const privateKey0 = process.env.PRIVATE_KEY_0

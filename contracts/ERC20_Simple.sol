@@ -2,9 +2,8 @@
 pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
-contract Token1 is ERC20, ERC20Burnable {
+contract ERC20_Simple is ERC20 {
 	uint8 private decimals2;
 
 	constructor(string memory _name, string memory _symbol, uint8 _decimals, uint _premint) ERC20(_name, _symbol) {
