@@ -1,6 +1,18 @@
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
+
+const infuraProjectId = process.env.INFURA_PROJECT_ID
+const privateKey0 = process.env.PRIVATE_KEY_0
+const etherscanApiKey = process.env.ETHERSCAN_API_KEY
 
 module.exports = {
+  defaultNetwork: "rinkeby",
+  networks: {
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/${infuraProjectId}`,
+      accounts: [privateKey0]
+    }
+  },
   solidity: {
     compilers: [
       {
@@ -13,5 +25,8 @@ module.exports = {
         }
       }
     ]
+  },
+  etherscan: {
+    apiKey: etherscanApiKey
   }
 }

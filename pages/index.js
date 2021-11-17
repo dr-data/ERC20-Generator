@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { ethers } from 'ethers'
-import erc20Types from '../artifacts/contracts/erc20Types.sol/Token0.json'
+import ERC20_Normal from '../artifacts/contracts/Token0.sol/Token0.json'
 import { Center, Button, Text, Spinner, Flex, Spacer, Switch, useColorMode } from '@chakra-ui/react'
 import Input1 from '../components/Input1'
 import { connectToWeb3 } from '../api/web3Provider'
 import { getTokenAddressPrefix } from '../api/utils'
+
 
 function Home() {
   const { toggleColorMode } = useColorMode()
@@ -21,7 +22,6 @@ function Home() {
   const [showBtnSpinner, setShowBtnSpinner] = useState(false)
   const [message1, setMessage1] = useState('')
   const [tokenAddress, setTokenAddress] = useState('')
-
 
 
   const addTokenToMetamsk = async () => {
@@ -56,21 +56,34 @@ function Home() {
     }
 
     try {
-      setButtonText1('Minting')
+      setButtonText1('Creating...')
       setShowBtnSpinner(true)
       setIsFormDisabled(true)
 
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
-
-      const Token0 = new ethers.ContractFactory(erc20Types.abi, erc20Types.bytecode, signer)
+      const Token0 = new ethers.ContractFactory(ERC20_Normal.abi, ERC20_Normal.bytecode, signer)
       const amount1 = ethers.utils.parseUnits(totalSupply, tokenDecimals).toString()
       const token0 = await Token0.deploy(tokenName, tokenSymbol, tokenDecimals, amount1)
-      await token0.deployTransaction.wait()
-      setTokenAddress(token0.address)
+      const { address, deployTransaction } = token0
+      await deployTransaction.wait()
 
       setButtonText1('Add Token To Wallet')
+      setTokenAddress(address)
       setShowBtnSpinner(false)
+
+      // Contract Verification (need not to execute, as etherscan 
+      // automatically verifies contract if it has same code 
+      // and same or different constructor arguments)
+      // const dataObj = {
+      //   contractAddr: address,
+      //   constructorArgs: [tokenName, tokenSymbol, tokenDecimals, amount1]
+      // }
+      // console.log(dataObj)
+      // await fetch(`/api/verify`, {
+      //   method: "POST",
+      //   body: JSON.stringify(dataObj)
+      // })
     } catch (error) {
       console.log(error)
       setButtonText1('Mint')
