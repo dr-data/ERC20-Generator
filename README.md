@@ -4,3 +4,4 @@ Verify Contract:
 - Auto verification is supported on: 
 	- Rinkeby (ERC20_Simple, Mint, Burn, Burn_Mint) 
 	- Binance (ERC20_Simple)
+	- Polygon (ERC20_Simple)

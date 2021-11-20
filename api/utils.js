@@ -7,7 +7,15 @@ import ERC20_Burn_Mint from '../artifacts/contracts/ERC20_Burn_Mint.sol/ERC20_Bu
 export const getTokenAddressPrefix = (chainId) => {
 	if (chainId === '0x3') return 'https://ropsten.etherscan.io/token/'
 	if (chainId === '0x4') return 'https://rinkeby.etherscan.io/token/'
+	if (chainId === '0x89') return 'https://polygonscan.com/address/'
+	if (chainId === '0x38') return 'https://bscscan.com/address/'
 	return 'https://etherscan.io/token/'
+}
+
+export const getNetworkName = (chainId) => {
+	if (chainId === '0x89') return 'PolygonScan'
+	if (chainId === '0x38') return 'BscScan'
+	return 'Etherscan'
 }
 
 export const getAbiAndBytecode = (isMintable, isBurnable) => {

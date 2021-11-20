@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react'
 import Input1 from '../components/Input1'
 import { connectToWeb3 } from '../api/web3Provider'
-import { getAbiAndBytecode, getTokenAddressPrefix } from '../api/utils'
+import { getAbiAndBytecode, getNetworkName, getTokenAddressPrefix } from '../api/utils'
 
 
 function Home() {
@@ -178,7 +178,7 @@ function Home() {
 
             <Text fontWeight='bold' textAlign='center' marginTop='20px'>
               <a href={`${getTokenAddressPrefix(currChainId)}${tokenAddress}`} target='_blank'>
-                Check on Etherscan
+                Check on {getNetworkName(currChainId)}
               </a>
             </Text>
           }

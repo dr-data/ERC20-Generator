@@ -6,6 +6,7 @@ const infuraProjectId = process.env.INFURA_PROJECT_ID
 const privateKey0 = process.env.PRIVATE_KEY_0
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY
 const binanceApiKey = process.env.BINANCE_API_KEY
+const polygonApiKey = process.env.POLYGONSCAN_API_KEY
 
 module.exports = {
   defaultNetwork: "rinkeby",
@@ -16,6 +17,10 @@ module.exports = {
     },
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/${infuraProjectId}`,
+      accounts: [privateKey0]
+    },
+    polygon: {
+      url: `https://polygon-rpc.com/`,
       accounts: [privateKey0]
     }
   },
@@ -33,6 +38,6 @@ module.exports = {
     ]
   },
   etherscan: {
-    apiKey: binanceApiKey
+    apiKey: etherscanApiKey
   }
 }
