@@ -192,15 +192,6 @@ function Home() {
      </Text>
      </Box>
       
-     // Source code:
-     // <Box position='absolute' bottom='10px' width='100%'>
-     //   <Text textAlign='center'
-     //   > Source code: <a
-     //     href='https://github.com/YoungMahesh/ERC20-Generator'
-     //     target='_blank'
-     //   > https://github.com/YoungMahesh/ERC20-Generator </a>
-     //   </Text>
-     // </Box>
     </Box>
   )
 }
